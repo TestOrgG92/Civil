@@ -1,0 +1,46 @@
+name: Backup and Clone
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  backup_and_clone:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Connect to EC2 instance
+      uses: appleboy/ssh-action@master
+      with:
+        host: 3.132.85.71
+        username: ubuntu
+        key: ${{ secrets.EC2_INSTANCE_PRIVATE_KEY }}
+        port: 22
+
+    - name: Backup data
+      run: |
+        cp /var/www/html/.env /tmp
+        sudo tar -czvf /tmp/backup.tar.gz  /var/www/html/*
+        sudo rm -rf /var/www/html/*
+
+    - name: Clone data from GitHub
+      uses: actions/checkout@v2
+      with:
+        ref: main
+        path: /var/www/html
+
+    - name: Move .env file back to directory
+      run: |
+        sudo mv /tmp/.env /var/www/html/.env
+
+    - name: Run commands
+      run: |
+        sudo cd /var/www/html
+        sudo composer install
+        sudo php artisan key:generate
+        sudo php artisan storage:link
+        sudo chmod -R 777 storage/
+        sudo chmod -R 777 bootstrap/
+        sudo php artisan optimize:clear
+        sudo systemctl restart apache2
