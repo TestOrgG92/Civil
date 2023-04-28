@@ -23,7 +23,7 @@ jobs:
         with:
           host: 3.137.64.131
           username: ubuntu
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{ secrets.EC2_INSTANCE_PRIVATE_KEY }}
           port: 22
           script: |
             cd /var/www/html
@@ -31,4 +31,4 @@ jobs:
           
       - name: Verify deployment
         run: |
-          curl http://13.127.190.236
+          curl http://3.137.64.131	
