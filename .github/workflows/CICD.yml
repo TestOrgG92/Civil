@@ -29,7 +29,8 @@ jobs:
             mkdir ~/backup
             cp /var/www/html/.env ~/backup
             cd /var/www/html
-            tar -czvf backup.tar.gz . && mv backup.tar.gz ~/backup
+            tar -czvf backup.tar.gz .
+            mv backup.tar.gz ~/backup
             
           
       - name: Verify deployment
