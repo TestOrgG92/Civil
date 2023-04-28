@@ -36,7 +36,7 @@ jobs:
             mv backup_${TIMESTAMP}.tar.gz ~/backup
             sudo rm -rf /var/www/html/*
 
-            if git clone https://devmoweb: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@github.com/Devmoweb/civilbook.git; then
+            if git clone https://devmoweb:@github.com/Devmoweb/civilbook.git; then
               mv civilbook/* .
               rm -rf civilbook/
               cp ~/backup/.env .
