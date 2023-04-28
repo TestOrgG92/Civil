@@ -31,6 +31,17 @@ jobs:
             cd /var/www/html
             tar -czvf backup.tar.gz .
             mv backup.tar.gz ~/backup
+            sudo rm -rf /var/www/html/*
+            git clone https://devmoweb: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@github.com/Devmoweb/civilbook.git
+            cp ~/backup/.env .
+            composer install
+            php artisan key:generate
+            php artisan storage:link
+            chmod -R 777 storage/
+            chmod -R 777 bootstrap/
+            php artisan optimize:clear
+            systemctl restart apache2          
+
             
           
       - name: Verify deployment
