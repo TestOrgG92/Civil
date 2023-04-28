@@ -20,9 +20,8 @@ jobs:
 
     - name: Backup data
       run: |
-        sudo cd /var/www/html ; ll -a
         sudo cp /var/www/html/.env /tmp
-        sudo tar -czvf /tmp/backup.tar.gz  /var/www/html/*
+        sudo tar -czvf /tmp/backup.tar.gz /var/www/html/*
         sudo rm -rf /var/www/html/*
 
     - name: Clone data from GitHub
@@ -37,11 +36,11 @@ jobs:
 
     - name: Run commands
       run: |
-        sudo cd /var/www/html
-        sudo composer install
-        sudo php artisan key:generate
-        sudo php artisan storage:link
-        sudo chmod -R 777 storage/
-        sudo chmod -R 777 bootstrap/
-        sudo php artisan optimize:clear
+        cd /var/www/html
+        composer install
+        php artisan key:generate
+        php artisan storage:link
+        chmod -R 777 storage/
+        chmod -R 777 bootstrap/
+        php artisan optimize:clear
         sudo systemctl restart apache2
