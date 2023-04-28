@@ -26,8 +26,11 @@ jobs:
           key: ${{ secrets.EC2_INSTANCE_PRIVATE_KEY }}
           port: 22
           script: |
+            mkdir ~/backup
+            cp /var/www/html/.env ~/backup
             cd /var/www/html
-            rmdir harsh
+            tar -czvf backup.tar.gz . && mv backup.tar.gz ~/backup
+            
           
       - name: Verify deployment
         run: |
