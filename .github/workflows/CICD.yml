@@ -17,13 +17,11 @@ jobs:
         username: ubuntu
         key: ${{ secrets.EC2_INSTANCE_PRIVATE_KEY }}
         port: 22
-
-    - name: Backup data
-      run: |
-        systemctl is-active apache2
-        sudo cp /var/www/html/.env /tmp
-        sudo tar -czvf /tmp/backup.tar.gz /var/www/html/*
-        sudo rm -rf /var/www/html/*
+        script: |
+          sudo cp /var/www/html/.env /tmp
+          sudo tar -czvf /tmp/backup.tar.gz /var/www/html/*
+          sudo rm -rf /var/www/html/*
+        
 
     - name: Clone data from GitHub
       uses: actions/checkout@v2
