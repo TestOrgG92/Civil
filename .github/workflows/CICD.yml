@@ -20,6 +20,7 @@ jobs:
 
     - name: Backup data
       run: |
+        systemctl is-active apache2
         sudo cp /var/www/html/.env /tmp
         sudo tar -czvf /tmp/backup.tar.gz /var/www/html/*
         sudo rm -rf /var/www/html/*
