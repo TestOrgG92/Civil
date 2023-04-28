@@ -20,6 +20,7 @@ jobs:
 
     - name: Backup data
       run: |
+        sudo cd /var/www/html ; ll -a
         sudo cp /var/www/html/.env /tmp
         sudo tar -czvf /tmp/backup.tar.gz  /var/www/html/*
         sudo rm -rf /var/www/html/*
